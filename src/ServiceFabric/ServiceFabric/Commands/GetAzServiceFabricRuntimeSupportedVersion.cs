@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Commands
     [Cmdlet(VerbsCommon.Get, ResourceManager.Common.AzureRMConstants.AzurePrefix + "ServiceFabricRuntimeSupportedVersion", DefaultParameterSetName = "ByRegion"), OutputType(typeof(List<RuntimePackageDetails>))]
     public partial class GetAzServiceFabricRuntimeSupportedVersion : ServiceFabricCmdletBase
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, Position = 3)]
         [ValidateSet("Windows", "Linux")]
         [PSDefaultValue(Help = "Windows", Value = "Windows")]
         public string Environment
@@ -42,14 +42,14 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Commands
             set;
         } = "Windows";
 
-        [Parameter(Mandatory = false, ParameterSetName = "ByLatest")]
+        [Parameter(Mandatory = false, ParameterSetName = "ByLatest", Position = 1)]
         public SwitchParameter Latest
         {
             get;
             set;
         }
 
-        [Parameter(Mandatory = true, ParameterSetName = "ByRegion")]
+        [Parameter(Mandatory = true, ParameterSetName = "ByRegion", Position = 0)]
         [Parameter(ParameterSetName = "ByLatest")]
         [Parameter(ParameterSetName = "ByVersion")]
         public string Region
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Commands
             set => base.ResourceGroupName = value;
         }
 
-        [Parameter(Mandatory = false, ParameterSetName = "ByVersion")]
+        [Parameter(Mandatory = false, ParameterSetName = "ByVersion", Position = 2)]
         public string Version
         {
             get;
