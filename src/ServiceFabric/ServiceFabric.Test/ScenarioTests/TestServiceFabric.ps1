@@ -312,3 +312,40 @@ function Test-UpdateAzureRmServiceFabricVmImage
 
 	Assert-AreEqual $clusters[0].VmImage $targetVmImage "Cluster vmimage was supposed to equal $targetVmImage. Change may not have been absorbed."
 }
+
+function Test-GetAzServiceFabricRuntimeSupportedVersion
+{
+	$error.Clear()
+	$region = "westus"
+	$versions = Get-AzServiceFabricRuntimeSupportedVersion -Region $region
+	Assert-True { $error.Count -eq 0 }
+	Assert-NotNull $versions
+	Assert-AreNotEqual $versions.Count 0
+
+	$versions = Get-AzServiceFabricRuntimeSupportedVersion -Region $region -Environment Linux
+	Assert-True { $error.Count -eq 0 }
+	Assert-NotNull $versions
+	Assert-AreNotEqual $versions.Count 0
+
+	$versions = Get-AzServiceFabricRuntimeSupportedVersion -Region $region -Environment Linux -Latest
+	Assert-True { $error.Count -eq 0 }
+	Assert-NotNull $versions
+	Assert-AreEqual $versions.Count 1
+
+	$versions = Get-AzServiceFabricRuntimeSupportedVersion -Region $region -Latest
+	Assert-True { $error.Count -eq 0 }
+	Assert-NotNull $versions
+	Assert-AreEqual $versions.Count 1
+
+	# bad parameter set
+	$error.Clear()
+	$versions = Get-AzServiceFabricRuntimeSupportedVersion -Region $region -Version 0.0.0.0 -Latest
+	Assert-True { $error.Count -ne 0 }
+
+	# bad region
+	$error.Clear()
+	$region = "badRegion"
+	$versions = Get-AzServiceFabricRuntimeSupportedVersion -Region $region
+	Assert-True { $error.Count -ne 0 }
+}
+

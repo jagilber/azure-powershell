@@ -176,6 +176,13 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Test.ScenarioTests
 
         [Fact, TestPriority(0)]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestGetAzServiceFabricRuntimeSupportedVersion()
+        {
+            TestController.NewInstance.RunPsTest(_logger, "Test-GetAzServiceFabricRuntimeSupportedVersion");
+        }
+
+        [Fact, TestPriority(0)]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void DefaultTemplateFilesAvailable()
         {
             var assemblyFolder = AppDomain.CurrentDomain.BaseDirectory;
