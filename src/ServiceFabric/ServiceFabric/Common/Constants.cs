@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Common
         public const string CertificateThumbprint = "certificateThumbprint";
         public const string CertificateUrlValue = "certificateUrlValue";
         public const string clusterProvider = "clusters";
+
         public const int DefaultApplicationEndPort = 30000;
         public const int DefaultApplicationStartPort = 20000;
         public const string DefaultCertificateStore = "my";
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Common
         public const int DefaultSSHBackendPort = 22;
         public const int DefaultTcpPort = 19000;
         public const string DefaultTier = "Standard";
+
         public const string GetRuntimeVersionsErrorId = "GetRuntimeVersionsErrorId";
         public const string IaaSDiagnostics = "IaaSDiagnostics";
         public const string KeyVaultType = "Microsoft.KeyVault/vaults";
@@ -50,10 +52,10 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Common
 
         // Managed clusters
         public const string ManagedClusterProvider = "managedClusters";
-
         public const string ManagedClustersFullType = "Microsoft.ServiceFabric/managedClusters";
         public const string ManagedNodeTypeProvider = "nodeTypes";
         public const string ManagedNodeTypesFullType = "Microsoft.ServiceFabric/managedClusters/nodeTypes";
+
         public const string ParameterFileName = @"parameter.json";
         public const string PublicIpAddressesType = "Microsoft.Network/publicIPAddresses";
         public const string SecCertificateThumbprint = "secCertificateThumbprint";
@@ -61,14 +63,17 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Common
         public const string SecretContentType = "application/x-pkcs12";
         public const string SecSourceVaultValue = "secSourceVaultValue";
         public const string SelfSignedIssuerName = "Self";
+
         public const string ServiceFabricExtNamePrefix = "ServiceFabric";
         public const string ServiceFabricExtNameSuffix = "Node";
         public const string ServiceFabricLinuxNodeExtName = "ServiceFabricLinuxNode";
         public const string ServiceFabricPrefix = "ServiceFabric";
         public const string ServiceFabricPublisher = "Microsoft.Azure.ServiceFabric";
+        public const string ServiceFabricResourceProvider = "Microsoft.ServiceFabric";
         public const string ServiceFabricResourceProviderApiVersion = "2018-02-01";
         public const string ServiceFabricType = "Microsoft.ServiceFabric/clusters";
         public const string ServiceFabricWindowsNodeExtName = "ServiceFabricNode";
+        
         public const string serviceProvider = "services";
         public const string ServieFabricTag = "Service Fabric";
         public const string SourceVaultValue = "sourceVaultValue";

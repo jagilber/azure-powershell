@@ -33,22 +33,6 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Commands
     [Cmdlet(VerbsCommon.Get, ResourceManager.Common.AzureRMConstants.AzurePrefix + "ServiceFabricRuntimeSupportedVersion", DefaultParameterSetName = "ByRegion"), OutputType(typeof(List<RuntimePackageDetails>))]
     public partial class GetAzServiceFabricRuntimeSupportedVersion : ServiceFabricCmdletBase
     {
-        [Parameter(Mandatory = false, Position = 3)]
-        [ValidateSet("Windows", "Linux")]
-        [PSDefaultValue(Help = "Windows", Value = "Windows")]
-        public string Environment
-        {
-            get;
-            set;
-        } = "Windows";
-
-        [Parameter(Mandatory = false, ParameterSetName = "ByLatest", Position = 1)]
-        public SwitchParameter Latest
-        {
-            get;
-            set;
-        }
-
         [Parameter(Mandatory = true, ParameterSetName = "ByRegion", Position = 0)]
         [Parameter(ParameterSetName = "ByLatest")]
         [Parameter(ParameterSetName = "ByVersion")]
@@ -58,17 +42,33 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Commands
             set;
         }
 
-        public override string ResourceGroupName
+        [Parameter(Mandatory = false, Position = 1)]
+        [ValidateSet("Windows", "Linux")]
+        [PSDefaultValue(Help = "Windows", Value = "Windows")]
+        public string Environment
         {
-            get => base.ResourceGroupName;
-            set => base.ResourceGroupName = value;
-        }
+            get;
+            set;
+        } = "Windows";
 
         [Parameter(Mandatory = false, ParameterSetName = "ByVersion", Position = 2)]
         public string Version
         {
             get;
             set;
+        }
+
+        [Parameter(Mandatory = false, ParameterSetName = "ByLatest", Position = 3)]
+        public SwitchParameter Latest
+        {
+            get;
+            set;
+        }
+
+        public override string ResourceGroupName
+        {
+            get => base.ResourceGroupName;
+            set => base.ResourceGroupName = value;
         }
 
         protected List<RuntimePackageDetails> FormatOutput(List<ClusterCodeVersionsResult> items)
@@ -136,7 +136,8 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Commands
 
         private List<ClusterCodeVersionsResult> GetRuntimeSupportedVersion()
         {
-            string resourceUri = $"https://management.azure.com/subscriptions/{SFRPClient.SubscriptionId}/providers/Microsoft.ServiceFabric/locations/{Region}/clusterVersions?api-version={Constants.ServiceFabricResourceProviderApiVersion}";
+            string resourceUri = $"https://management.azure.com/subscriptions/{SFRPClient.SubscriptionId}/providers/"
+                + $"{Constants.ServiceFabricResourceProvider}/locations/{Region}/clusterVersions?api-version={Constants.ServiceFabricResourceProviderApiVersion}";
 
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, resourceUri);
             CancellationToken cancellationToken = new CancellationToken();
@@ -168,8 +169,9 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Commands
                 AzureSession.Instance.ClientFactory.CreateArmClient<ResourceManagementClient>(DefaultContext, AzureEnvironment.Endpoint.ResourceManager)
             );
 
-            Provider providers = resourceManagerClient.Value.Providers.Get("Microsoft.ServiceFabric");
-            IEnumerable<string> locations = providers.ResourceTypes.FirstOrDefault(x => x.ResourceType.Equals("clusters")).Locations.Select(x => x.ToLower().Replace(" ", ""));
+            Provider providers = resourceManagerClient.Value.Providers.Get(Constants.ServiceFabricResourceProvider);
+            IEnumerable<string> locations = providers.ResourceTypes
+                .FirstOrDefault(x => x.ResourceType.Equals(Constants.clusterProvider)).Locations.Select(x => x.ToLower().Replace(" ", ""));
             string providedRegion = Region.ToLower().Replace(" ", "");
 
             if (!locations.Contains(providedRegion))
