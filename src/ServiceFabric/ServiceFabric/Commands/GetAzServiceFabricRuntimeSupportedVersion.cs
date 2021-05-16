@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Commands
             foreach (ClusterCodeVersionsResult package in items)
             {
                 RuntimePackageDetails packageDetails = new RuntimePackageDetails(package);
-                packageDetails.IsGoalPackage = packageDetails.Version == maxVersion;
+                packageDetails.IsGoalPackage = packageDetails.Version == maxVersion.ToString();
                 runtimePackageDetails.Add(packageDetails);
             }
 

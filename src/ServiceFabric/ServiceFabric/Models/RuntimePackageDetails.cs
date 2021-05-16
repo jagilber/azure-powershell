@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Models
             set;
         }
 
-        public Version Version
+        public string Version
         {
             get;
             set;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Commands.ServiceFabric.Models
 
         public RuntimePackageDetails(ClusterCodeVersionsResult packageDetails)
         {
-            Version = packageDetails.properties.codeVersion;
+            Version = packageDetails.properties.codeVersion.ToString();
             SupportExpiryDate = packageDetails.properties.supportExpiryUtc;
             Environment = packageDetails.properties.environment;
             IsGoalPackage = false;
